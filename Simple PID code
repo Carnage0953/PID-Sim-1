@@ -29,6 +29,11 @@ void setup() {
 void controlMotors(double pidValue) {
   // Implementeer hier de logica om de motoren aan te sturen op basis van de PID-waarde
   // Voor nu, doe niets
+int motorSpeedRight = ((pidValue-1.000)/(1.999-1.000)*1024);
+int motorSpeedLeft = ((pidValue-1.000)/(1.999-1.000)*-1024);
+analogWrite(motorPinRight, motorSpeedRight);
+analogWrite(motorPinLeft, motorSpeedLeft);
+ 
 }
 
 void loop() {
