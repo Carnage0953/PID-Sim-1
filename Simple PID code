@@ -58,8 +58,21 @@ void loop() {
   controlMotors(pidValue);
 }
 
+// Implementeer hier de logica om de fout te berekenen op basis van de sensorwaarden
 double calculateError(int sensorValuesFront[]) {
-  // Implementeer hier de logica om de fout te berekenen op basis van de sensorwaarden
-  // Voor nu, retourneer gewoon een dummy waarde
-  return 0.0;
+  int weight[5] = {-2, -1, 0, 1, 2}; // Gewichten voor elke sensor
+  int sum = 0;
+  int weightedSum = 0;
+
+  for (int i = 0; i < 5; i++) {
+    sum += sensorValuesFront[i];
+    weightedSum += weight[i] * sensorValuesFront[i];
+  }
+
+  // Bereken de gemiddelde fout
+  double error = (double)weightedSum / sum;
+
+  return error;
 }
+  // Voor nu, retourneer gewoon een dummy waarde
+  //return 0.0;
