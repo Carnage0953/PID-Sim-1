@@ -2,7 +2,6 @@
 
 // Definieer de sensorpinnen
 const int sensorPinsFront[5] = {2, 3, 4, 5, 6};
-const int sensorPinsBack[5] = {7, 8, 9, 10, 11};
 
 // Definieer de motorpinnen
 const int motorPinLeft = 12;
@@ -22,23 +21,27 @@ void setup() {
   // Initialiseer de sensor- en motorpinnen
   for (int i = 0; i < 5; i++) {
     pinMode(sensorPinsFront[i], INPUT);
-    pinMode(sensorPinsBack[i], INPUT);
   }
   pinMode(motorPinLeft, OUTPUT);
   pinMode(motorPinRight, OUTPUT);
 }
 
+void controlMotors(double pidValue) {
+  // Implementeer hier de logica om de motoren aan te sturen op basis van de PID-waarde
+  // Voor nu, doe niets
+}
+
 void loop() {
   // Lees de sensorwaarden
+  double calculateError(int sensorValuesFront[]);
+
   int sensorValuesFront[5];
-  int sensorValuesBack[5];
   for (int i = 0; i < 5; i++) {
     sensorValuesFront[i] = analogRead(sensorPinsFront[i]);
-    sensorValuesBack[i] = analogRead(sensorPinsBack[i]);
   }
 
   // Bereken de fout voor de PID-controller
-  error = calculateError(sensorValuesFront, sensorValuesBack);
+  error = calculateError(sensorValuesFront);
 
   // Bereken de PID-waarde
   integral = integral + error;
@@ -50,13 +53,8 @@ void loop() {
   controlMotors(pidValue);
 }
 
-double calculateError(int sensorValuesFront[], int sensorValuesBack[]) {
+double calculateError(int sensorValuesFront[]) {
   // Implementeer hier de logica om de fout te berekenen op basis van de sensorwaarden
   // Voor nu, retourneer gewoon een dummy waarde
   return 0.0;
-}
-
-void controlMotors(double pidValue) {
-  // Implementeer hier de logica om de motoren aan te sturen op basis van de PID-waarde
-  // Voor nu, doe niets
 }
