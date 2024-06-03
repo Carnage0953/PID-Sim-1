@@ -1,0 +1,62 @@
+#include <Arduino.h>
+
+// Definieer de sensorpinnen
+const int sensorPinsFront[5] = {2, 3, 4, 5, 6};
+const int sensorPinsBack[5] = {7, 8, 9, 10, 11};
+
+// Definieer de motorpinnen
+const int motorPinLeft = 12;
+const int motorPinRight = 13;
+
+// PID-parameters
+double Kp = 1.0;
+double Ki = 0.0;
+double Kd = 0.0;
+
+double error = 0.0;
+double previous_error = 0.0;
+double integral = 0.0;
+double derivative = 0.0;
+
+void setup() {
+  // Initialiseer de sensor- en motorpinnen
+  for (int i = 0; i < 5; i++) {
+    pinMode(sensorPinsFront[i], INPUT);
+    pinMode(sensorPinsBack[i], INPUT);
+  }
+  pinMode(motorPinLeft, OUTPUT);
+  pinMode(motorPinRight, OUTPUT);
+}
+
+void loop() {
+  // Lees de sensorwaarden
+  int sensorValuesFront[5];
+  int sensorValuesBack[5];
+  for (int i = 0; i < 5; i++) {
+    sensorValuesFront[i] = analogRead(sensorPinsFront[i]);
+    sensorValuesBack[i] = analogRead(sensorPinsBack[i]);
+  }
+
+  // Bereken de fout voor de PID-controller
+  error = calculateError(sensorValuesFront, sensorValuesBack);
+
+  // Bereken de PID-waarde
+  integral = integral + error;
+  derivative = error - previous_error;
+  double pidValue = Kp*error + Ki*integral + Kd*derivative;
+  previous_error = error;
+
+  // Stuur de motoren aan op basis van de PID-waarde
+  controlMotors(pidValue);
+}
+
+double calculateError(int sensorValuesFront[], int sensorValuesBack[]) {
+  // Implementeer hier de logica om de fout te berekenen op basis van de sensorwaarden
+  // Voor nu, retourneer gewoon een dummy waarde
+  return 0.0;
+}
+
+void controlMotors(double pidValue) {
+  // Implementeer hier de logica om de motoren aan te sturen op basis van de PID-waarde
+  // Voor nu, doe niets
+}
