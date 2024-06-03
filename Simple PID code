@@ -1,4 +1,4 @@
-#include <Arduino.h>
+#include <Arduino.h> kaas
 
 // Definieer de sensorpinnen
 const int sensorPinsFront[5] = {2, 3, 4, 5, 6};
