@@ -27,13 +27,22 @@ void setup() {
 }
 
 void controlMotors(double pidValue) {
-  // Implementeer hier de logica om de motoren aan te sturen op basis van de PID-waarde
-  // Voor nu, doe niets
-int motorSpeedRight = ((pidValue-1.000)/(1.999-1.000)*1024);
-int motorSpeedLeft = ((pidValue-1.000)/(1.999-1.000)*-1024);
-analogWrite(motorPinRight, motorSpeedRight);
-analogWrite(motorPinLeft, motorSpeedLeft);
- 
+  int baseSpeed = 100; // Basis snelheid voor de motoren
+  int correction = abs(pidValue); // Correctie op basis van de foutwaarde
+
+  if (pidValue > 0) {
+    // De robot wijkt af naar links, dus verhoog de snelheid van de rechtermotor en verlaag de snelheid van de linkermotor
+    analogWrite(motorPinRight, baseSpeed + correction);
+    analogWrite(motorPinLeft, baseSpeed - correction);
+  } else if (pidValue < 0) {
+    // De robot wijkt af naar rechts, dus verhoog de snelheid van de linkermotor en verlaag de snelheid van de rechtermotor
+    analogWrite(motorPinRight, baseSpeed - correction);
+    analogWrite(motorPinLeft, baseSpeed + correction);
+  } else {
+    // De robot is op de lijn, dus rijd rechtdoor met de basis snelheid
+    analogWrite(motorPinRight, baseSpeed);
+    analogWrite(motorPinLeft, baseSpeed);
+  }
 }
 
 void loop() {
