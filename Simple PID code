@@ -27,36 +27,21 @@ void setup() {
 }
 
 void controlMotors(double pidValue) {
- // int baseSpeed = 100; // Basis snelheid voor de motoren
-  int leftspeed = 100 // basis snelheid linker motoren
-  int rightspeed = 100 // basis snelheid recter motoren
+  int baseSpeed = 100; // Basis snelheid voor de motoren
   int correction = abs(pidValue); // Correctie op basis van de foutwaarde
 
-  leftspeed = leftseed + pidValue
-  rightspeed = rightspeed - pidValue
-
-  if (leftSpeed > 255) { leftSpeed = 255}   // uitgangen moeten tussen 0 en 255 blijven.
-  if (leftSpeed < 0 ) { leftSpeed = 0 }
-  if (rightSpeed > 255) { rightSpeed = 255} 
-  if (rightSpeed < 0 ) { rightSpeed = 0 }
-
-  analogWrite(motorPinLeft, leftSpeed );
-  analogWrite(motorPinRight, rightSpeed );
-
-
-
- // if (pidValue > 0) {
+  if (pidValue > 0) {
     // De robot wijkt af naar links, dus verhoog de snelheid van de rechtermotor en verlaag de snelheid van de linkermotor
-  //  analogWrite(motorPinRight, baseSpeed + correction);
-   // analogWrite(motorPinLeft, baseSpeed - correction);
-//  } else if (pidValue < 0) {
+    analogWrite(motorPinRight, baseSpeed + correction);
+    analogWrite(motorPinLeft, baseSpeed - correction);
+  } else if (pidValue < 0) {
     // De robot wijkt af naar rechts, dus verhoog de snelheid van de linkermotor en verlaag de snelheid van de rechtermotor
-//    analogWrite(motorPinRight, baseSpeed - correction);
-//    analogWrite(motorPinLeft, baseSpeed + correction);
-//  } else {
+    analogWrite(motorPinRight, baseSpeed - correction);
+    analogWrite(motorPinLeft, baseSpeed + correction);
+  } else {
     // De robot is op de lijn, dus rijd rechtdoor met de basis snelheid
-  //  analogWrite(motorPinRight, baseSpeed);
- //   analogWrite(motorPinLeft, baseSpeed);
+    analogWrite(motorPinRight, baseSpeed);
+    analogWrite(motorPinLeft, baseSpeed);
   }
 }
 
